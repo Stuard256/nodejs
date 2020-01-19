@@ -2,6 +2,8 @@ var http = require('http');
 var url = require('url');
 var fs = require('fs');
 
+var port = 5000;
+
 function factorial(k) {
     if (k <= 1) return 1;
     return k * factorial(k - 1);
@@ -25,6 +27,6 @@ http.createServer((request, response) => {
         response.writeHead(200, {'Content-type': 'text/html'});
         response.end(html);
     }
-}).listen(3000);
+}).listen(port);
 
-console.log('Server running on http://localhost:3000');
+console.log('Server running on http://localhost:'+ port);

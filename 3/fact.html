@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 
 <head>
@@ -14,8 +14,8 @@
             const d = Date.now();
             for(var k = 1 ; k <= 20; ++k) {
                 fetch(`/fact?k=${k}`)
-                .then(response => response.json())
-                .then(data => {result.innerHTML += (Date.now() - d) + ' - ' + data.k + '/' + data.fact + '<br>'});
+                    .then(response => response.json())
+                    .then(data => { result.innerHTML += (Date.now() - d) + ' - ' + data.k + '/' + data.fact + '<br>' });
             }
         </script>
     </div>
