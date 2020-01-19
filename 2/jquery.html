@@ -1,0 +1,19 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>JQuery</title>
+        <script src='https://code.jquery.com/jquery-3.4.1.min.js'></script>
+    </head>
+    <body>
+        <div id='container'></div>
+        <script>
+            $.ajax({
+                type: 'GET',
+                url: '/api/name',
+                success: data => {
+                    document.getElementById('container').innerText = data;
+                }});
+        </script>
+    </body>
+</html>

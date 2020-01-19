@@ -1,0 +1,18 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>XMLHttpRequest</title>
+        <meta charset='utf-8'/>
+    </head>
+    <body>
+        <div id='container'></div>
+        <script>
+            let xml = new XMLHttpRequest();
+            xml.open('GET', '/api/name');
+            xml.send();
+            xml.onloadend = e => {
+                document.getElementById('container').innerHTML = xml.responseText;
+            }
+        </script>
+    </body>
+</html>
