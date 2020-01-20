@@ -12,11 +12,85 @@
             result.innerHTML = '';
             let n = 0;
             const d = Date.now();
-            for(var k = 1 ; k <= 20; ++k) {
-                fetch(`/fact?k=${k}`)
-                    .then(response => response.json())
-                    .then(data => { result.innerHTML += (Date.now() - d) + ' - ' + data.k + '/' + data.fact + '<br>' });
-            }
+                for (var k = 1; k <= 20; ++k) {       //Cross-origin resource sharing   
+                    fetch(`/fact?k=${k}`)  // типы ответа basic, cors, opaque ; mode - same-origin, cors, cors-with-forsed-preflight (тестовый запрос перед запросом), no-cors;
+                        .then(response => response.json())
+                        .then(data => { result.innerHTML += (Date.now() - d) + ' - ' + data.k + '/' + data.fact + '<br>' })
+                        .catch((err) => {
+                            console.log(err);
+                        });
+                }
+
+
+            
+            /* Fetch API является современной альтернативой XMLHttpRequest
+             * Универсальные интерфейсы Headers, Request и Response обеспечивают согласованность,
+             * в то время как Promises позволяют упростить цепочки и async/await без обратных вызовов. 
+             *  он не обеспечивает все функциональные возможности XHR
+             *  Нет прогресса,невозможно сообщить о статусе загрузки файлов или аналогичных представлений больших форм.
+             *  Тайм-ауты не поддерживаются,и запрос будет продолжаться до тех пор, пока браузер его обрабатывает
+             * 
+             * function fetchTimeout(url, init, timeout = 3000) {
+                   return new Promise((resolve, reject) => {
+                       fetch(url, init)
+                           .then(resolve)
+                           .catch(reject);
+                       setTimeout(reject, timeout);
+                   }
+                }
+             * 
+             * fetch в два этапа
+             * сначала сервер присылает заголовки ответа
+             * и можно чекнуть response   if(response.ok){
+             *                              ...
+             *                            }else{
+             *                              ...
+             *                            }
+             *
+             * JSON.
+                response.text() – читает ответ и возвращает как обычный текст,
+                response.json() – декодирует ответ в формате JSON,
+                response.formData() – возвращает ответ как объект FormData (разберём его в следующей главе),
+                response.blob() – возвращает объект как Blob (бинарные данные с типом),
+                response.arrayBuffer() – возвращает ответ как ArrayBuffer (низкоуровневое представление бинарных данных),
+                помимо этого, response.body – это объект ReadableStream, с помощью которого можно считывать тело запроса по частям. Мы рассмотрим и такой пример несколько позже.
+
+                Объект Promise (промис) используется для отложенных и асинхронных вычислений.
+                new Promise(executor);
+                new Promise(function(resolve, reject) { ... });
+
+                методы
+                all, 
+                allSettled(iterable)
+                race
+                reject 
+                resolve
+             * await ожидает разрешения Promise и возвращает полученное значение.
+             * Если Promise отклоняется, то await генерирует исключение с отклонённым значением.
+             * Оператор await заставляет функцию, объявленную с использованием оператора async,
+             * ждать выполнения Promise и продолжать выполнение после возвращения Promise значения
+             * 
+             * всё это пихается в {} после url в фетче
+              method: 'post',  
+                headers: {  
+                  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+                },  
+                body: 'foo=bar&lorem=ipsum'  
+
+                Обещание может завершиться только один раз, либо успехом, либо ошибкой, и другого не дано. Оно не может выполниться дважды.
+                Если обещание выполнится, и ты только после этого передашь ему колбэк, он отработает, не взирая на то, что событие уже давно произошло.
+                Обещание может быть:                     Promise-подобный объект (в Promise терминологии его ещё называют thenable)
+
+                    fulfilled — успешно завершённым
+                    rejected — завершённым с ошибкой
+                    pending — не завершённым
+                    settled — завершённым с любым исходом
+
+                    если всё ок - resolve()
+                    если нет - reject()
+            */
+
+
         </script>
     </div>
 </body>

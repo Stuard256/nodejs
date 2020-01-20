@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <title>Main page</title>
+        <script>
+            function getUserAsString() {
+                return JSON.stringify({id: Id.value, fio: Fio.value, date: Birth.value});
+            }
+
+            function Get() {
+                fetch('/api/db').then(r => r.json()).then(json => {
+                    result.innerHTML = '';
+                    json.forEach(obj => {
+                        result.innerHTML += obj.id + '. ' + obj.fio + ' - ' + obj.date + '</br>';
+                    });
+                }).catch((err) => { alert(err); });
+            }
+            function Post() {
+                fetch('/api/db', {'method': 'POST', 
+                    headers: {'Content-type': 'application/json', 'Accept': 'application/json'},
+                    body: getUserAsString()
+                }).then((r) => {
+                    if (r.ok) {r => r.json()}
+                    else {
+                        throw Error(r.statusText);
+                        };
+                    })
+                    .then(data => console.log(data))
+                    .catch((err) => { alert(err); });
+            }
+            function Put() {
+                fetch('/api/db', {'method': 'PUT', 
+                    headers:{
+                        'Content-type': 'application/json'
+                    },
+                    body: getUserAsString()
+                }).then((res) => {
+                    if (res.ok) { return res;}
+                        else {
+                            throw Error(res.statusText);
+                        };
+                    })
+                    .catch((err) => { alert(err); });
+            }
+            function Delete() {
+                fetch(`/api/db?id=${encodeURIComponent(Id.value)}`, {
+                    'method': 'DELETE'
+                })
+                    .then((res) => {
+                        if (res.ok) {}
+                        else {
+                            throw Error(res.statusText);
+                        };
+                    })
+                .catch ((err) => { alert(err); });
+            }
+        </script>
+    </head>
+    <body>
+        <h1>Lec 04</h1>
+        <div id="result"></div><br/>
+        <button onclick="Get()">GET</button><br/>
+        <label>Идентификатор</label><br/>
+        <input type="number" id="Id"/><br/>
+        <label>ФИО</label><br/>
+        <input type="text" id="Fio"/><br/>
+        <label>Дата рождения</label><br/>
+        <input type="date" id="Birth"/><br/>
+        <button onclick="Post()">POST</button>
+        <button onclick="Put()">PUT</button>
+        <button onclick="Delete()">DELETE</button>
+    </body>
+</html>

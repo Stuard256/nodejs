@@ -13,8 +13,11 @@ function Fac(n, cb) {
     this.n = n;
     this.callBack = cb;
     this.result = 0;
-    this.calculate = ()=> {setImmediate(()=>{this.result = factorial(this.n); this.callBack();})};
-}
+    this.calculate = () => { setImmediate(() => { this.result = factorial(this.n); this.callBack(); }) }; // setImmediate() — это специальный таймер, который выполняется в отдельной фазе цикла событий. 
+    //Он использует API libuv, чтобы запланировать коллбэки для выполнения после завершения фазы опроса.
+}   //    setImmediate() предназначен для выполнения сценария после завершения текущей фазы опроса.
+    //    setTimeout() планирует запуск сценария после истечения минимального порога в миллисекундах.
+    //    Однако, если вы перемещаете оба вызова в цикл ввода/вывода, коллбэк setImmediate всегда выполняется первым
 
 http.createServer((request, response) => {
     let path = url.parse(request.url).pathname;
