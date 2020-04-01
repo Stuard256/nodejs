@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        Справочник
+    </title>
+    <link rel="stylesheet" href="/public/css/common.css"/>
+</head>
+<body>
+    <div id="contacts-container">
+        <div id="contacts">
+            <ul>
+                {{#each contacts}}
+                    {{>contact}}
+                {{/each}}
+            </ul>
+        </div>
+        {{{body}}}
+    </div>
+</body>
+</html>

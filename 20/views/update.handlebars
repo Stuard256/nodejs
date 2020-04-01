@@ -1,0 +1,21 @@
+<br />
+<form id="updateForm" action="/update" method="POST">
+    <input type="hidden" name="id" value="{{activeContactId}}"/>
+    <input type="text" name="newdata" placeholder="Фамилия, имя, отчество  Телефон" value="{{activeContact}}"/>
+</form>
+
+<form id="deleteForm" action="/delete" method="POST">
+    <input name="id" type="hidden" value="{{activeContactId}}"/>
+</form>
+
+<br />
+<button onclick="document.getElementById('updateForm').submit()">Изменить</button>
+<button onclick="document.getElementById('deleteForm').submit()">Удалить</button>
+{{#discardBtn}}{{/discardBtn}}
+
+<script>
+    let elements = document.getElementsByTagName('a');
+    for (element of elements) {
+        element.removeAttribute('href');
+    }
+</script>
